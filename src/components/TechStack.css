@@ -1,0 +1,189 @@
+.tech-stack-section {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  background-color: white;
+}
+
+
+.tech-container {
+  width: 100%;
+  border: 2px solid black;
+  background: white;
+  padding: 40px;
+  
+  box-shadow: 10px 10px 0px 0px black; 
+}
+
+.section-title {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 40px;
+  border-bottom: 2px solid black;
+  padding-bottom: 15px;
+  text-transform: uppercase;
+}
+
+
+.tech-layout {
+  display: flex;
+  gap: 50px;  
+  align-items: flex-start;  
+}
+
+
+.tech-grid {
+  flex: 1;  
+}
+
+.tech-category {
+  margin-bottom: 30px;
+}
+
+.tech-category h3 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.icons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.tech-icon-box {
+  width: 70px;
+  height: 70px;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.tech-icon-box img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  pointer-events: none;  
+}
+
+
+.tech-icon-box:hover {
+  background-color: black;
+  transform: translate(-4px, -4px);
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.3);
+}
+
+.tech-icon-box:hover img {
+  filter: invert(1); 
+}
+
+
+.tech-info-panel {
+  width: 300px;  
+  height: 320px; 
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f4;  
+}
+
+.terminal-header {
+  background-color: black;
+  color: white;
+  padding: 8px 15px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
+.terminal-content {
+  padding: 20px;
+  flex-grow: 1;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.tech-name {
+  font-size: 1.8rem;
+  border-bottom: 2px dashed black;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+}
+
+.framework-list {
+  list-style: none;
+  padding: 0;
+}
+
+.framework-list li {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.placeholder-text {
+  opacity: 0.5;
+  margin-top: 40px;
+  text-align: center;
+}
+
+
+@media screen and (max-width: 1000px) {
+    
+  .section-title {
+      font-size: 2rem;
+  }
+  
+  .tech-layout {
+      flex-direction: column; 
+    }
+  
+    .tech-info-panel {
+      width: 100%; 
+      height: auto;
+      min-height: 200px;
+      margin-top: 30px;
+    }
+  
+    .tech-container {
+      width: 100%; 
+      
+      padding: 15px; 
+      box-shadow: 5px 5px 0px 0px black;
+    }
+    
+    
+    .icons-row {
+      gap: 21.5px;
+      justify-content: flex-start; 
+    }
+  
+    
+    .tech-icon-box {
+      width: 65px;
+      height: 65px;
+    }
+  }

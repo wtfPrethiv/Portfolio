@@ -1,0 +1,66 @@
+@font-face {
+  font-family: nimbus-sans;
+  src: url('./assets/fonts/nimbus_sans.otf'); 
+}
+@font-face {
+  font-family: "pixel-grid";
+  src: url('./assets/fonts/Pixel_Grid.ttf');
+}
+@font-face {
+  font-family: lordish;
+  src: url('./assets/fonts/Lordish_Regular.ttf');
+}
+@font-face {
+  font-family: "Highfield";
+  src: url('./assets/fonts/Highfield_Thin.ttf');
+}
+
+* {
+  font-family: nimbus-sans;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14.4px;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  margin: 0;
+}
+
+section {
+  min-height: 100vh;
+  display: flex;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.double {
+  margin-top: 0.52%;
+  margin-left: 1.25%;
+  margin-right: 1.25%;
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 12px;
+  }
+  
+  section {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+    padding-bottom: 50px;
+  }
+
+  .double {
+    margin-left: 1.25%;
+    margin-right: 1.25%;
+    margin-top: 0;
+  }
+}

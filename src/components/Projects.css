@@ -1,0 +1,158 @@
+.projects-section {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  background-color: white;
+}
+
+
+.projects-container {
+  width: 100%;
+  border: 2px solid black;
+  box-shadow: 10px 10px 0px 0px black;
+  background: white;
+  padding: 40px;
+  margin: 0 auto;
+}
+
+
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  border-bottom: 2px solid black;
+  padding-bottom: 15px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.projects-header h1 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: black;
+  margin: 0;
+  text-align: left;
+}
+
+
+.show-more-btn {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  background: white;
+  border: 2px solid black;
+  padding: 10px 20px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-block; 
+}
+
+.show-more-btn:hover {
+  background-color: black;
+  color: white;
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.3);
+  transform: translate(-2px, -2px);
+}
+
+
+.mobile-only {
+  display: none;
+}
+
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 30px;
+  width: 100%;
+}
+
+
+.project-card {
+  border: 2px solid black;
+  background-color: white;
+  aspect-ratio: 1 / 1; 
+  min-height: 300px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 25px;
+  
+  text-decoration: none;
+  color: black;
+  transition: all 0.2s ease;
+}
+
+.project-card h3 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.project-card p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.project-card:hover {
+  transform: translate(-5px, -5px);
+  box-shadow: 8px 8px 0px 0px lightgrey;
+  background-color: white; 
+}
+
+
+@media screen and (max-width: 1200px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media screen and (max-width: 700px) {
+    
+  .desktop-only {
+    display: none;
+  }
+
+  
+  .mobile-only {
+    display: block;
+    width: 100%; 
+    text-align: center;
+    margin-top: 30px; 
+  }
+
+  
+  .projects-header {
+    justify-content: flex-start;  
+    margin-bottom: 30px;
+  }
+  
+  .projects-header h1 {
+    font-size: 2rem;
+    text-align: left; 
+    width: 100%;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr; 
+  }
+  
+  .projects-container {
+    width: 100%;
+    padding: 20px;
+    box-shadow: 5px 5px 0px 0px black; 
+  }
+}

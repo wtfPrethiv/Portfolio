@@ -1,0 +1,154 @@
+.sabout {
+  position: relative;
+  margin-left: 20px;
+  width: 100%;
+}
+
+.sabout h1 {
+  padding-top: 10%;
+  font-size: 59px;
+}
+
+.sabout p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.2rem;
+  color: black;
+  margin-right: 70%;
+  text-align: justify;
+  padding-top: 10px;
+}
+
+.sabout img {
+  display: flex;
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  justify-content: center;
+  align-items: flex-start;
+  top: 20%;
+  left: 70%;
+}
+
+
+
+.linkedin {
+  display: inline-flex;
+  color: black;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  margin-left: 10px;
+}
+
+.linkedin-button {
+  margin-top: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  background-color: white;
+  border: 1px solid black;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: auto;
+}
+
+.linkedin-button:hover {
+  background-color: #f3f3f3;
+}
+
+.cv {
+  margin-top: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  background-color: white;
+  border: 1px solid black;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: auto;
+  
+}
+
+.cvd {
+  display: inline-flex;
+  color: black;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  margin-right: 6px;
+}
+
+.cv:hover{
+  background-color: #f3f3f3;
+  transform: scale(1.1);
+}
+
+.linkedin-button,.cv svg {
+  margin-right: 8px;
+  width: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .sabout {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 140px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .sabout h1 {
+    font-size: 2.5rem;
+    padding-top: 0;
+    line-height: 1.1;
+    margin-bottom: 15px;
+  }
+
+  .sabout p {
+    margin-right: 0;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .sabout img {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 30px auto;
+    top: auto;
+    left: auto;
+    align-self: center;
+  }
+
+  .links-container {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+    gap: 15px; 
+  }
+  
+
+  .linkedin-button, .cv {
+    margin: 0; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 45px;
+  }
+}

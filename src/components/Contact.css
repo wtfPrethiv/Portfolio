@@ -1,0 +1,152 @@
+.contact-section {
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px; 
+  background-color: white;
+
+  margin: 0; 
+  box-sizing: border-box;
+}
+
+.contact-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  
+  gap: 100px; 
+}
+
+
+.contact-left {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end; 
+  
+
+  border-right: 5px solid black; 
+  padding-right: 30px; 
+  
+  
+  padding-top: 80px;
+  padding-bottom: 80px;
+  
+  text-align: right;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  padding-right: 100px;
+}
+
+.contact-left h1 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: black;
+  white-space: nowrap;
+}
+
+.contact-left p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+
+.contact-right {
+  flex: 1; 
+  display: flex;
+  flex-wrap: nowrap;  
+  gap: 20px; 
+  padding-left: 7.5%;
+  align-items: center;
+  justify-content: flex-start; 
+}
+
+
+.contact-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  
+  width: auto; 
+  min-width: 160px; 
+  padding: 12px 20px;
+  
+  border: 2px solid black;
+  background-color: white;
+  text-decoration: none;
+  color: black;
+  
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.1rem;
+  font-weight: 900;
+  
+  transition: all 0.2s ease;
+  white-space: nowrap; 
+}
+
+.contact-btn svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0; 
+}
+
+
+.contact-btn:hover {
+  background-color: black;
+  color: white;
+  transform: translate(-4px, -4px);
+  box-shadow: 6px 6px 0px 0px rgba(0,0,0,0.3);
+}
+
+
+@media screen and (max-width: 1100px) {
+  .contact-section {
+    height: auto; 
+    min-height: 100vh;  
+    padding: 50px 20px;
+  }
+
+  .contact-container {
+    flex-direction: column; 
+    gap: 30px;
+  }
+
+  .contact-left {
+    align-items: center; 
+    text-align: center;
+    border-right: none; 
+    border-bottom: 5px solid black; 
+    
+    
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 30px;
+    
+    width: 100%;
+  }
+  
+  .contact-left h1 {
+    font-size: 2.5rem;
+    white-space: normal; 
+  }
+
+  .contact-right {
+    flex-wrap: wrap; 
+    justify-content: center;
+    width: 100%;
+    padding-left: 0;
+  }
+  
+  .contact-btn {
+    width: 100%; 
+    justify-content: center;
+  }
+}
