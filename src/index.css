@@ -1,5 +1,5 @@
 @font-face {
-  font-family: nimbus-sans;
+  font-family:"nimbus-sans";
   src: url('./assets/fonts/nimbus_sans.otf'); 
 }
 @font-face {
@@ -7,7 +7,7 @@
   src: url('./assets/fonts/Pixel_Grid.ttf');
 }
 @font-face {
-  font-family: lordish;
+  font-family: "lordish";
   src: url('./assets/fonts/Lordish_Regular.ttf');
 }
 @font-face {
@@ -21,6 +21,22 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+  
+  overflow-y: scroll; 
+  scroll-behavior: smooth;
+
+  scroll-snap-type: y mandatory;
+}
+
 
 html {
   font-size: 14.4px;

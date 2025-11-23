@@ -1,34 +1,44 @@
 .double00 {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   background-color: black;
   height: 45px;
   width: 100%;
   overflow: hidden;
   position: relative;
-  gap: 20px;
+
+  display: flex;
+  align-items: center;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;  
+ 
+  animation: scroll-seamless 20s linear infinite; 
+}
+
+ 
+.ticker-item {
+  flex-shrink: 0; 
+  padding-right: 50px;  
+  display: flex;
+  align-items: center;
 }
 
 .double00 p {
   font-family: "pixel-grid", monospace;  
   color: #ffffff;
-  animation: scroll-text 13s linear infinite;
   white-space: nowrap;
   font-size: 14px;
   letter-spacing: 2px;
- 
-  
-  position: absolute;
-  width: 100%;
-  height: 100%;
   margin: 0;
   line-height: 45px;
-  text-align: center;
-  transform: translateX(100%);
 }
 
-@keyframes scroll-text {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+@keyframes scroll-seamless {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
