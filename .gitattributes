@@ -1,0 +1,5 @@
+*.ts linguist-detectable=true
+*.tsx linguist-detectable=true
+*.js linguist-generated=false
+*.tsx linguist-language=TypeScript
+*.ts linguist-language=TypeScript
