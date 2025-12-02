@@ -47,9 +47,9 @@ const Navbar: React.FC = () => {
           
           <ul className={`nav-elements ${isMenuOpen ? 'active' : ''}`}>
             <li><a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a></li>
-            <li><a href="/About.txt" onClick={() => setIsMenuOpen(false)}>About</a></li>
             <li><a href="#projects" onClick={() => setIsMenuOpen(false)}>Projects</a></li>
             <li><a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
+            <li><a href="/About.txt" onClick={() => setIsMenuOpen(false)}>About</a></li>
           </ul>
         </nav>
       </div>
