@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 import {
@@ -179,9 +180,9 @@ const Menu = ({ onClose, sectionRefs, onNavigate, isDarkTheme }: MenuProps) => {
           <a href="#" className="hover:underline">
             Blogs
           </a>
-          <a href="#" className="hover:underline">
+          <Link href="/lab" className="hover:underline" onClick={onClose}>
             LAB
-          </a>
+          </Link>
           <a href="#" className="hover:underline">
             Blender Renders
           </a>
