@@ -1,76 +1,75 @@
+@font-face {
+  font-family: 'Airone';
+  src: url('/fonts/AironeFont-Demo.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Built Titling';
+  src: url('/fonts/built%20titling%20rg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Built Titling';
+  src: url('/fonts/built%20titling%20rg%20it.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Elegist';
+  src: url('/fonts/Elegist.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 40 98% 47%;
-    --accent-foreground: 0 0% 0%;
+    /* Site palette: blood red / warm cream / ink */
+    --ink: 24 18% 5%;
+    --cream: 40 48% 96%;
+    --blood: 8 82% 48%;
+
+    --background: 16 12% 5%;
+    --foreground: 39 39% 93%;
+    --card: 16 12% 5%;
+    --card-foreground: 39 39% 93%;
+    --popover: 16 12% 5%;
+    --popover-foreground: 39 39% 93%;
+    --primary: 6 88% 48%;
+    --primary-foreground: 39 39% 93%;
+    --secondary: 24 12% 12%;
+    --secondary-foreground: 39 39% 93%;
+    --muted: 24 12% 12%;
+    --muted-foreground: 36 12% 69%;
+    --accent: 6 88% 48%;
+    --accent-foreground: 39 39% 93%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 0%;
-    --chart-1: 12 76% 61%;
+    --border: 24 12% 17%;
+    --input: 24 12% 17%;
+    --ring: 6 88% 48%;
+    --chart-1: 6 88% 48%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-  .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 0%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 0%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 40 98% 47%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 100%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 24 18% 7%;
+    --sidebar-foreground: 39 39% 93%;
+    --sidebar-primary: 6 88% 48%;
+    --sidebar-primary-foreground: 39 39% 93%;
+    --sidebar-accent: 24 12% 12%;
+    --sidebar-accent-foreground: 39 39% 93%;
+    --sidebar-border: 24 12% 17%;
+    --sidebar-ring: 6 88% 48%;
   }
 }
 
@@ -79,15 +78,49 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-ink text-cream;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-  
+
+  ::selection {
+    background: hsl(var(--blood));
+    color: hsl(var(--cream));
+  }
+
   html {
-    scrollbar-width: none;  
-    -ms-overflow-style: none;  
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   html::-webkit-scrollbar {
-    display: none;  
+    display: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--blood));
+    outline-offset: 4px;
+  }
+}
+
+/* ── Section Transition System ── */
+[data-st-01] {
+  position: relative;
+}
+
+[data-st-01]:not([data-st-01="pin"]) {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

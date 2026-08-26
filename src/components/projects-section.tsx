@@ -4,7 +4,7 @@ import * as React from 'react';
 import { cn } from "@/lib/utils";
 import { motion, HTMLMotionProps, Variants } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import FlowingMenu from './FlowingMenu';
+import FlowingMenu from './flowing-menu';
 
 
 type StaggerDirection = 'start' | 'middle' | 'end';
@@ -193,14 +193,20 @@ export default function ProjectsSection() {
           className="text-[12vw] font-black leading-none tracking-tighter"
         />
 
-        <div className="mt-4 flex justify-between border-t border-white pt-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-5%' }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+          className="mt-4 flex justify-between border-t border-white pt-4"
+        >
           <span className="text-xs uppercase tracking-widest text-neutral-400">
             Selected Works
           </span>
           <span className="text-xs uppercase tracking-widest text-neutral-400">
             2022 — 2025
           </span>
-        </div>
+        </motion.div>
       </div>
 
       <div className="w-full min-h-[600px] border-t border-neutral-800">

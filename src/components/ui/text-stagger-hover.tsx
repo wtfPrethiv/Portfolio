@@ -78,7 +78,7 @@ export function useAnimationVariants(animation?: AnimationT) {
       hidden: {
         x: animation === "left" ? "-100%" : animation === "right" ? "100%" : 0,
         y: animation === "top" ? "-100%" : animation === "bottom" ? "100%" : 0,
-        scale: animation === "z" ? 0 : 1,
+        scale: animation === "z" ? 0.95 : 1,
         filter: animation === "blur" ? "blur(10px)" : "blur(0px)",
         opacity: 0,
       },
@@ -124,16 +124,18 @@ export const TextStaggerHover = ({
   const [isMouseIn, setIsMouseIn] = React.useState<boolean>(false);
   const handleMouse = () => setIsMouseIn((prevState) => !prevState);
 
+  const Comp = Component as any;
+
   return (
     <TextStaggerHoverContext.Provider value={{ isMouseIn }}>
-      <Component
+      <Comp
         className={cn("relative inline-block overflow-hidden", className)}
         {...props}
         onMouseEnter={handleMouse}
         onMouseLeave={handleMouse}
       >
         {children}
-      </Component>
+      </Comp>
     </TextStaggerHoverContext.Provider>
   );
 };

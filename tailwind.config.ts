@@ -16,6 +16,10 @@ export default {
         sans: ['Inter', 'sans-serif'],
         serif: ['"Playfair Display"', 'serif'],
         'serif-italic': ['"Playfair Display"', 'serif'],
+        alfa: ['"Alfa Slab One"', 'serif'],
+        airone: ['Airone', 'sans-serif'],
+        built: ['"Built Titling"', 'sans-serif'],
+        elegist: ['Elegist', 'serif'],
       },
       fontWeight: {
         'serif-italic': '400',
@@ -24,6 +28,9 @@ export default {
         'serif-italic': 'italic',
       },
       colors: {
+        ink: 'hsl(var(--ink))',
+        cream: 'hsl(var(--cream))',
+        blood: 'hsl(var(--blood))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

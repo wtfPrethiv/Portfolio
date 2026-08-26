@@ -6,7 +6,8 @@ import {
   Github,
   Linkedin,
 } from 'lucide-react';
-import ScrollStaggerText from './ScrollStaggerText'; 
+import { motion } from 'framer-motion';
+import ScrollStaggerText from './scroll-stagger-text'; 
 
 export default function ContactSection({ isActive }: { isActive: boolean }) {
   return (
@@ -43,11 +44,16 @@ export default function ContactSection({ isActive }: { isActive: boolean }) {
       </div>
 
 
-      <div className="flex-1 flex flex-col justify-center">
+      <motion.div 
+        className="flex-1 flex flex-col justify-center"
+        initial={{ opacity: 0, y: 30 }}
+        animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+      >
         <div className="space-y-6 pt-7">
           
           <a
-            href="/path-to-your-resume.pdf"
+            href="/resume.pdf"
             download
             className="group relative flex items-center gap-3 text-xl sm:text-2xl font-bold w-fit pb-1"
           >
@@ -64,6 +70,7 @@ export default function ContactSection({ isActive }: { isActive: boolean }) {
           <a
             href="https://instagram.com/_prethiv"
             target="_blank"
+            rel="noopener noreferrer"
             className="group relative flex items-center gap-3 text-xl sm:text-2xl font-bold w-fit pb-1"
           >
             <Instagram className="w-6 h-6" />
@@ -106,9 +113,14 @@ export default function ContactSection({ isActive }: { isActive: boolean }) {
             <span className="absolute bottom-0 left-0 w-full h-[2px] bg-black origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100" />
           </a>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="flex-none w-full flex flex-col items-end justify-end pb-6 md:pb-10">
+      <motion.div 
+        className="flex-none w-full flex flex-col items-end justify-end pb-6 md:pb-10"
+        initial={{ opacity: 0, y: 30 }}
+        animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+      >
         
         <a 
           href="mailto:prethivshoba@gmail.com"
@@ -127,7 +139,7 @@ export default function ContactSection({ isActive }: { isActive: boolean }) {
           
           <div className="w-full h-[3px] md:h-[5px] bg-black mt-2 md:mt-4 transition-all duration-300 group-hover:h-[8px]" />
         </a>
-      </div>
+      </motion.div>
 
     </section>
   );

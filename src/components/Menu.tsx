@@ -1,9 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 import {
   TextStaggerHover,
@@ -14,7 +12,7 @@ import {
 type MenuProps = {
   onClose: () => void;
   sectionRefs: {
-    [key: string]: React.RefObject<HTMLElement>;
+    [key: string]: React.RefObject<HTMLElement | null>;
   };
   onNavigate: (id: string) => void;  
   isDarkTheme: boolean;  
@@ -22,7 +20,6 @@ type MenuProps = {
 
 const menuItems = [
   { id: "HOME", label: "Home" },
-  { id: "ABOUT", label: "About" },
   { id: "PROJECTS", label: "Projects" },
   { id: "CONTACT", label: "Contact" },
 ];
@@ -141,7 +138,6 @@ const MenuInfoItem = ({
 );
 
 const Menu = ({ onClose, sectionRefs, onNavigate, isDarkTheme }: MenuProps) => {
-  const menuFooterImage = PlaceHolderImages.find((p) => p.id === "menu-footer");
 
   const handleScrollTo = (id: string) => {
     onNavigate(id);

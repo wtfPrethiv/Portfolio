@@ -2,7 +2,7 @@
 import { useScroll, useSpring, MotionValue } from "framer-motion";
 import React from "react";
 
-export const useScrollProgress = (targetRef: React.RefObject<HTMLElement>): MotionValue<number> => {
+export const useScrollProgress = (targetRef: React.RefObject<HTMLElement | null>): MotionValue<number> => {
     const { scrollYProgress } = useScroll({
       target: targetRef,
       offset: ["start start", "end start"], 
