@@ -1,29 +1,32 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP, gsap, EASE } from "@/lib/animation";
-import LetterSwapForward from "@/components/fancy/text/letter-swap-forward-anim";
 
 /**
- * The whole sequence plays out across the section's arrival — the single
- * viewport of scroll where its top travels from the bottom of the screen to the
- * top, which is the exact range the hero parallax runs over. Nothing pins or
- * sticks, so the box must be done growing before the section lands.
- *
- * Position where the box has swallowed the whole viewport — no red left.
+ * Total scroll runway, in vh. The first 100vh is the arrival — the section
+ * travelling from the bottom of the viewport to the top, the same range the
+ * hero parallax runs over — and the rest is the sticky hold. The hold only
+ * begins once the frame is edge-to-edge black, so there is nothing left on
+ * screen that could betray it as a pause.
  */
-const FULL = 0.76;
+const SECTION_VH = 300;
+
+/** Position where the section lands and the box is already full bleed. */
+const ARRIVE = 100 / SECTION_VH;
+
+const ABOUT_TEXT = "ABOUT ME";
+
+const BIO_TEXT =
+  "Junior at SRMIST exploring AI research — working with Mechanistic Interpretability, Deep Learning, and Physics-Informed Machine Learning. Building systems, experimenting with ideas, and digging deeper into how intelligence really works. I like working on research problems where there isn’t always an obvious answer—building things, testing ideas, breaking them, and figuring out why they work (or don’t). I’m especially interested in understanding models beyond just their outputs and exploring how we can make AI systems more interpretable, reliable, and capable.";
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const topTitleRef = useRef<HTMLDivElement>(null);
   const midIndexRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
-  const aboutTitleContainerRef = useRef<HTMLDivElement>(null);
-  const aboutContentRef = useRef<HTMLDivElement>(null);
-  const cardBadgeRef = useRef<HTMLDivElement>(null);
-  const [letterSwapTriggered, setLetterSwapTriggered] = useState(false);
-  const letterSwapTriggeredRef = useRef(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const aboutTextRef = useRef<HTMLDivElement>(null);
 
   const whoAmIText = "WHO AM I ?";
 
@@ -31,25 +34,34 @@ export default function AboutSection() {
     () => {
       if (!sectionRef.current || !frameRef.current) return;
 
-      // Runs from the instant the section's top touches the bottom of the
-      // viewport until it reaches the top — identical to the hero parallax
-      // range, so the two move together and both finish as the section lands.
+      // Explicit resting states, so nothing depends on a tween's "from" having
+      // rendered yet — the section can be loaded already scrolled into.
+      gsap.set(".about-letter", { yPercent: 115 });
+      gsap.set(".bio-word", { rotateX: -92, yPercent: 55, opacity: 0 });
+
+      // The text lives inside the box so the box clips it, but the box's centre
+      // travels from ~25vh to 50vh as it opens. Left alone the text would slide
+      // down while its letters slide up. Offsetting it by the box's own drift
+      // each frame keeps it planted at the middle of the screen.
+      const holdTextCentred = () => {
+        if (!frameRef.current || !contentRef.current) return;
+        const box = frameRef.current.getBoundingClientRect();
+        gsap.set(contentRef.current, {
+          y: window.innerHeight / 2 - (box.top + box.height / 2),
+        });
+      };
+
       const tl = gsap.timeline({
         defaults: { ease: "none" },
+        onUpdate: holdTextCentred,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top bottom",
-          end: "top top",
+          end: "bottom bottom",
           // Small on purpose: Lenis already smooths the scroll position, so a
           // long scrub here would stack a second lag on top and feel mushy.
           scrub: 0.6,
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (self.progress >= FULL && !letterSwapTriggeredRef.current) {
-              letterSwapTriggeredRef.current = true;
-              setLetterSwapTriggered(true);
-            }
-          },
         },
       });
 
@@ -58,26 +70,25 @@ export default function AboutSection() {
         .fromTo(
           ".who-letter",
           { opacity: 0, x: -14 },
-          { opacity: 1, x: 0, stagger: 0.012, duration: 0.1 },
-          0.02
+          { opacity: 1, x: 0, stagger: 0.006, duration: 0.05 },
+          0.01
         )
         .fromTo(
           midIndexRef.current,
           { opacity: 0, x: -14 },
-          { opacity: 1, x: 0, duration: 0.1 },
-          0.06
+          { opacity: 1, x: 0, duration: 0.05 },
+          0.03
         )
 
-        // ── The box grows in one continuous move ──
-        // Every edge runs its own ease across the same span rather than being
-        // chained through a midpoint, so no edge can change speed abruptly. The
-        // three beats come from the easing, not from handoffs: the sides open
-        // first, the bottom follows, and the top holds its red band and closes
-        // last on an ease that still lands softly.
+        // ── The box grows in one continuous move, finishing as the section
+        // lands. Every edge runs its own ease across the same span rather than
+        // being chained through a midpoint, so no edge can change speed
+        // abruptly: the sides open first, the bottom follows, and the top holds
+        // its red band and closes last on an ease that still lands softly.
         .fromTo(
           frameRef.current,
           { scale: 0.55 },
-          { scale: 1, ease: "power2.out", duration: 0.16 },
+          { scale: 1, ease: "power2.out", duration: 0.07 },
           0
         )
         .fromTo(
@@ -88,60 +99,75 @@ export default function AboutSection() {
             marginRight: "0vw",
             borderRadius: 0,
             ease: "power1.out",
-            duration: FULL,
+            duration: ARRIVE,
           },
           0
         )
         .fromTo(
           frameRef.current,
           { marginBottom: "68vh" },
-          { marginBottom: "0vh", ease: "power2.inOut", duration: FULL },
+          { marginBottom: "0vh", ease: "power2.inOut", duration: ARRIVE },
           0
         )
         .fromTo(
           frameRef.current,
           { marginTop: "18vh" },
-          { marginTop: "0vh", ease: EASE.lateSoft, duration: FULL },
+          { marginTop: "0vh", ease: EASE.lateSoft, duration: ARRIVE },
           0
         )
 
         // Red-stage labels dissolve as the top edge closes over them
         .to(
           [topTitleRef.current, midIndexRef.current],
-          { opacity: 0, duration: 0.14 },
-          0.5
+          { opacity: 0, duration: 0.1 },
+          0.2
         )
 
-        // Title tracks the frame so it never overflows the small card
+        // ── ABOUT ME rises into view early, while box is still expanding ──
         .fromTo(
-          aboutTitleContainerRef.current,
-          { scale: 0.34 },
-          { scale: 1, ease: "power1.out", duration: FULL },
-          0
+          ".about-letter",
+          { yPercent: 115 },
+          {
+            yPercent: 0,
+            ease: "power3.out",
+            duration: 0.12,
+            stagger: { each: 0.014, from: "start" },
+          },
+          0.06
         )
 
-        // ── Full black: title glides up, bio arrives ──
-        .to(
-          aboutTitleContainerRef.current,
-          { yPercent: -34, ease: "power2.out", duration: 0.24 },
-          FULL - 0.06
-        )
+        // ── Once the box reaches full viewport (ARRIVE), drop the text off ──
         .fromTo(
-          cardBadgeRef.current,
-          { opacity: 0, y: -10 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.14 },
-          FULL - 0.08
+          ".about-letter",
+          { yPercent: 0 },
+          {
+            yPercent: 115,
+            ease: "power3.in",
+            duration: 0.1,
+            stagger: { each: 0.011, from: "end" },
+            immediateRender: false,
+          },
+          ARRIVE
         )
+
+        // ── Bio unfolds word by word once the title has left ──
         .fromTo(
-          aboutContentRef.current,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.22 },
-          FULL - 0.02
+          ".bio-word",
+          { rotateX: -92, yPercent: 55, opacity: 0 },
+          {
+            rotateX: 0,
+            yPercent: 0,
+            opacity: 1,
+            ease: "power2.out",
+            duration: 0.08,
+            stagger: { each: 0.0062, from: "start" },
+          },
+          ARRIVE + 0.15
         )
 
         // Pads the timeline to a duration of exactly 1 so every position above
         // maps to a fixed fraction of the scroll range.
-        .to({}, { duration: 0.04 }, 0.96);
+        .to({}, { duration: 0.02 }, 0.98);
     },
     { scope: sectionRef }
   );
@@ -150,100 +176,90 @@ export default function AboutSection() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative h-screen w-full overflow-hidden select-none"
-      style={{ backgroundColor: "hsl(var(--blood))" }}
+      className="relative w-full select-none"
+      style={{ height: `${SECTION_VH}vh`, backgroundColor: "hsl(var(--blood))" }}
     >
-      {/* ── Top Header on Red Background ── */}
+      {/* Sticky stage: holds the black screen still while the text plays out */}
       <div
-        ref={topTitleRef}
-        className="absolute top-[8.5vh] sm:top-[9vh] md:top-[9.5vh] left-1/2 -translate-x-1/2 z-30 pointer-events-none flex items-center justify-center"
+        className="sticky top-0 h-screen w-full overflow-hidden"
+        style={{ backgroundColor: "hsl(var(--blood))" }}
       >
-        <h2 className="font-body text-[11px] sm:text-[13px] md:text-[14px] font-bold uppercase tracking-[0.35em] sm:tracking-[0.4em] text-ink flex">
-          {whoAmIText.split("").map((char, index) => (
-            <span key={`who-${index}`} className="who-letter inline-block opacity-0">
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
-        </h2>
-      </div>
-
-      {/* ── Mid-Left Indicator on Red Background ── */}
-      <div
-        ref={midIndexRef}
-        className="absolute left-2 sm:left-4 md:left-6 lg:left-8 top-[24vh] sm:top-[25vh] md:top-[26vh] -translate-y-1/2 z-30 pointer-events-none opacity-0"
-      >
-        <span className="font-body text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-ink">
-          ( 1 )
-        </span>
-      </div>
-
-      {/* ── Expanding Black Box ── */}
-      <div
-        ref={frameRef}
-        className="absolute inset-0 z-20 mt-[18vh] mx-[44vw] mb-[68vh] rounded bg-ink text-cream overflow-hidden flex flex-col items-center justify-center p-3 sm:p-6 md:p-10 shadow-2xl"
-      >
+        {/* ── Top Header on Red Background ── */}
         <div
-          ref={cardBadgeRef}
-          className="absolute top-6 left-6 right-6 flex items-center justify-between text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-cream/40 pointer-events-none opacity-0"
+          ref={topTitleRef}
+          className="absolute top-[8.5vh] sm:top-[9vh] md:top-[9.5vh] left-1/2 -translate-x-1/2 z-30 pointer-events-none flex items-center justify-center"
         >
-          <span>[ PERSPECTIVE // 01 ]</span>
-          <span>EST. 2026</span>
+          <h2 className="font-body text-[11px] sm:text-[13px] md:text-[14px] font-bold uppercase tracking-[0.35em] sm:tracking-[0.4em] text-ink flex">
+            {whoAmIText.split("").map((char, index) => (
+              <span key={`who-${index}`} className="who-letter inline-block opacity-0">
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </h2>
         </div>
 
-        {/* ── ABOUT ME Title ── */}
+        {/* ── Mid-Left Indicator on Red Background ── */}
         <div
-          ref={aboutTitleContainerRef}
-          className="flex flex-col items-center justify-center text-center z-10 will-change-transform"
+          ref={midIndexRef}
+          className="absolute left-2 sm:left-4 md:left-6 lg:left-8 top-[24vh] sm:top-[25vh] md:top-[26vh] -translate-y-1/2 z-30 pointer-events-none opacity-0"
         >
-          <div className="cursor-pointer group">
-            <LetterSwapForward
-              label="ABOUT ME"
-              reverse={false}
-              transition={{ type: "spring", duration: 0.7 }}
-              staggerDuration={0.035}
-              staggerFrom="first"
-              className="font-airone text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-[0.08em] text-cream group-hover:text-blood transition-colors duration-300"
-              trigger={letterSwapTriggered}
-            />
-          </div>
-          <div className="mt-2.5 flex items-center gap-3 whitespace-nowrap">
-            <span className="h-[1px] w-5 bg-blood/60" />
-            <span className="text-[9px] sm:text-[11px] md:text-xs uppercase tracking-[0.35em] font-semibold text-blood font-body">
-              Creative Developer &amp; AI Researcher
-            </span>
-            <span className="h-[1px] w-5 bg-blood/60" />
-          </div>
+          <span className="font-body text-xs sm:text-sm md:text-base font-bold tracking-[0.25em] text-ink">
+            ( 1 )
+          </span>
         </div>
 
-        {/* ── Bio Content ── */}
+        {/* ── ABOUT ME Text Container — sits above the box, not clipped ── */}
         <div
-          ref={aboutContentRef}
-          className="absolute bottom-8 sm:bottom-12 md:bottom-14 left-6 right-6 sm:left-12 sm:right-12 md:left-16 md:right-16 flex flex-col items-center text-center z-10 max-w-2xl mx-auto opacity-0"
+          ref={aboutTextRef}
+          className="pointer-events-none absolute top-[27%] left-1/2 w-screen -translate-x-1/2 -translate-y-1/2 z-30 px-6"
         >
-          <p className="font-body text-xs sm:text-sm md:text-base leading-relaxed text-cream/90 font-light">
-            Obsessed with the confluence of high-impact visuals, mathematical rigor,
-            and machine intelligence. Engineering fluid web architectures, physics-informed
-            neural simulations, and immersive digital systems.
-          </p>
-
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] md:text-[11px] font-mono font-medium uppercase tracking-[0.2em]">
-            <span className="px-3.5 py-1.5 border border-cream/20 bg-cream/5 text-cream/90 transition-colors hover:border-blood hover:text-white">
-              [ Interactive Systems ]
-            </span>
-            <span className="px-3.5 py-1.5 border border-cream/20 bg-cream/5 text-cream/90 transition-colors hover:border-blood hover:text-white">
-              [ Machine Learning ]
-            </span>
-            <span className="px-3.5 py-1.5 border border-cream/20 bg-cream/5 text-cream/90 transition-colors hover:border-blood hover:text-white">
-              [ WebGL &amp; Shaders ]
-            </span>
-          </div>
+          <h2
+            aria-label="About me"
+            className="flex justify-center whitespace-nowrap font-moniqa uppercase leading-none tracking-normal text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[7vw]"
+          >
+            {ABOUT_TEXT.split("").map((char, index) => (
+              <span
+                key={`about-${index}`}
+                aria-hidden="true"
+                className="inline-block shrink-0 overflow-hidden pb-[0.14em]"
+              >
+                <span
+                  className={`about-letter inline-block will-change-transform ${
+                    index === 0 ? "text-blood" : "text-cream"
+                  }`}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              </span>
+            ))}
+          </h2>
         </div>
 
-        {/* Subtle Ambient Background Depth */}
+        {/* ── Expanding Black Box ── */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-black"
-          aria-hidden="true"
-        />
+          ref={frameRef}
+          className="absolute inset-0 z-20 mt-[18vh] mx-[44vw] mb-[68vh] rounded bg-ink text-cream overflow-hidden shadow-2xl"
+        >
+          <div ref={contentRef} className="absolute inset-0">
+            {/* Bio — unfolds word by word */}
+            <div className="pointer-events-none absolute top-1/2 left-1/2 w-screen -translate-x-1/2 -translate-y-1/2 px-6 sm:px-10 md:px-16">
+              <p className="w-full text-justify font-body text-base sm:text-xl md:text-2xl lg:text-3xl font-light leading-relaxed text-cream/90">
+                {BIO_TEXT.split(" ").map((word, index) => (
+                  // Perspective has to sit on the direct parent, or the rotateX
+                  // below flattens into a squash instead of an unfold.
+                  <span
+                    key={`bio-${index}`}
+                    className="inline-block mr-[0.28em] [perspective:700px]"
+                  >
+                    <span className="bio-word inline-block origin-top will-change-transform">
+                      {word}
+                    </span>
+                  </span>
+                ))}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

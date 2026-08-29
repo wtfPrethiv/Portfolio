@@ -20,6 +20,7 @@ export default {
         airone: ['Airone', 'sans-serif'],
         built: ['"Built Titling"', 'sans-serif'],
         elegist: ['Elegist', 'serif'],
+        moniqa: ['Moniqa', 'serif'],
       },
       fontWeight: {
         'serif-italic': '400',
