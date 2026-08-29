@@ -14,12 +14,17 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     const lenisInstance = new Lenis({
       duration: 2.4,
       easing: (t: number) => {
-        // Spring-like ease: overshoots ~2% then settles — gives a tactile bounce
-        const c1 = 1.70158;
+        // Spring-like ease: overshoots ~2% then settles — gives a tactile bounce.
+        // Keep c1 small: the overshoot rewinds the scroll position, which any
+        // scrub-linked animation replays as a visible bounce-back.
+        const c1 = 0.8;
         const c3 = c1 + 1;
         return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
       },
       smoothWheel: true,
+      // Below 1 so a wheel notch covers less ground — the scroll-driven
+      // sequences get more input to play out over.
+      wheelMultiplier: 0.7,
       touchMultiplier: 1.5,
       infinite: false,
     });

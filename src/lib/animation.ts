@@ -23,6 +23,9 @@ export function initAnimations() {
   CustomEase.create('slowFastSoft', 'M0,0 C0.55,0 0.7,0.3 1,1');
   // Fast out, long settle — for elements arriving into place.
   CustomEase.create('arrive', 'M0,0 C0.16,1 0.3,1 1,1');
+  // Holds, then travels and eases to a stop. For the edge that must move last
+  // without snapping when it arrives.
+  CustomEase.create('lateSoft', 'M0,0 C0.45,0 0.55,0.1 0.72,0.42 0.85,0.72 0.9,1 1,1');
 }
 
 // Auto-register on first client import so plugins are available
@@ -33,6 +36,7 @@ export const EASE = {
   slowFast: 'slowFast',
   slowFastSoft: 'slowFastSoft',
   arrive: 'arrive',
+  lateSoft: 'lateSoft',
 } as const;
 
 export { gsap, ScrollTrigger, useGSAP };
