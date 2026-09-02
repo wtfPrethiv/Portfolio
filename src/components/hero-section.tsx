@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import FluidTypography from './fluid-typography';
 
 export default function HeroSection({ isPreloaderCompleted }: { isPreloaderCompleted: boolean }) {
   const shouldReduceMotion = useReducedMotion();
@@ -26,8 +25,6 @@ export default function HeroSection({ isPreloaderCompleted }: { isPreloaderCompl
 
   return (
     <section className="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-cream p-6 text-ink selection:bg-ink selection:text-cream sm:p-12">
-      {/* Fluid Typography Canvas */}
-      {!shouldReduceMotion && <FluidTypography isPreloaderCompleted={isPreloaderCompleted} />}
       {/* Top Row */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
