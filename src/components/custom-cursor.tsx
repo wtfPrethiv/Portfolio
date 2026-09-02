@@ -46,7 +46,7 @@ export default function CustomCursor({ isIdle }: CustomCursorProps) {
       mouseY.set(e.clientY - size / 2);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
